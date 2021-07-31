@@ -5,12 +5,6 @@
         <h1 class='text-center'>Preferences</h1>
         <form action='/prefs' method='GET'>
             <div class='row'>
-                <div class='col'>Session length (hours)</div>
-                <div class='col-3' style='text-align: right;'><input type='number' class='form-control' name='sessionLength' id='sessionLength' value='1'></div>
-            </div>
-            &nbsp;
-            &nbsp;
-            <div class='row'>
                 <div class='col'>Daily variety</div>
                 <div class='col'>
                     <div class='row'>
@@ -35,10 +29,26 @@
             &nbsp;
             &nbsp;
             <div class='row'>
-                <div class='col'>Work times</div>
-                <div>
+                <div class='col'>Session length (hours)</div>
+                <div class='col-3' style='text-align: right;'><input type='number' class='form-control' name='sessionLength' id='sessionLength' value='1'></div>
+            </div>
+            &nbsp;
+            &nbsp;
+            <div>
+                <div class='row'>
+                    <div class='col'>Time ranges</div>
+                    <div class='col-3'><input type='time' class='form-control' name='start0' id='start0'></div>
+                    <div class='range-mid'>to</div>
+                    <div class='col-3'><input type='time' class='form-control' name='end0' id='end0'></div>
+                </div>
+                <div style='text-align: right;'>
+                    <form action="/addrange" method='post'>
+                        <input type="submit" class='btn' value='+'>
+                    </form>
                 </div>
             </div>
+            
+            
         </form>
     </div>
     <%- include('../partials/footer'); %>
