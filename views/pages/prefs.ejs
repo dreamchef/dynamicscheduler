@@ -1,4 +1,44 @@
 <%- include('../partials/header'); %>
 </head>
 <body>
+    <div style='width: 30%; margin: 0 35%;'>
+        <h1 class='text-center'>Preferences</h1>
+        <form action='/prefs' method='GET'>
+            <div class='row'>
+                <div class='col'>Session length (hours)</div>
+                <div class='col-3' style='text-align: right;'><input type='number' class='form-control' name='sessionLength' id='sessionLength' value='1'></div>
+            </div>
+            &nbsp;
+            &nbsp;
+            <div class='row'>
+                <div class='col'>Daily variety</div>
+                <div class='col'>
+                    <div class='row'>
+                        <div class='col range-left'>static</div>
+                        <div class='col'><input type='range' class='form-range' name='dailyVar' id='dailyVar' value='1'></div>
+                        <div class='col range-right'>dynamic</div>
+                    </div>
+                </div>
+            </div>
+            &nbsp;
+            &nbsp;
+            <div class='row'>
+                <div class='col'>Session variety</div>
+                <div class='col'>
+                    <div class='row'>
+                        <div class='col range-left'>similar</div>
+                        <div class='col'><input type='range' class='form-range' name='sessionVar' id='sessionVar' value='1'></div>
+                        <div class='col range-right'>disparate</div>
+                    </div>
+                </div>
+            </div>
+            &nbsp;
+            &nbsp;
+            <div class='row'>
+                <div class='col'>Work times</div>
+                <div>
+                </div>
+            </div>
+        </form>
+    </div>
     <%- include('../partials/footer'); %>

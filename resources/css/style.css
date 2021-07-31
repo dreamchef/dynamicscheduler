@@ -1,0 +1,15 @@
+.range-left {
+    text-align: right;
+    font-size: 8pt;
+    color: #a5a5a5;
+    padding: 0;
+    margin: 0;
+}
+
+.range-right {
+    text-align: left;
+    font-size: 8pt;
+    color: #a5a5a5;
+    padding: 0;
+    margin: 0;
+}

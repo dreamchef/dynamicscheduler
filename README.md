@@ -22,7 +22,7 @@ When the schedule starts, there is a 'move to next task' button.  By default, th
 ## Application Architecture
 ![](resources/img/dynamic_scheduler_architecture.png)
 
-## DONE Database Design
+## Database Design
 [Link to dbdiagram.io](https://dbdiagram.io/d/6104a0a12ecb310fc3b79989)
 
 ## Wireframes
