@@ -23,6 +23,11 @@ app.get('/', (req, res) => res.render('pages/index.ejs'));
 /// --------------------------------
 app.get('/prefs', (req, res) => res.render('pages/prefs'));
 
+app.post('/prefs/add-range', function (req, res) {
+  //res.send('POST request to the homepage')
+  console.log("adding new work range");
+})
+
 
 // --------------------------------
 //          TASKS VIEW ROUTES
