@@ -21,12 +21,13 @@ app.get('/', (req, res) => res.render('pages/index.ejs'));
 // --------------------------------
 //          PREFERENCES VIEW ROUTES
 /// --------------------------------
-app.get('/prefs', (req, res) => res.render('pages/prefs'));
+app.get('/prefs', (req, res) => res.render('pages/prefs', {
+  numRanges: 1
+}));
 
-app.post('/prefs/add-range', function (req, res) {
-  //res.send('POST request to the homepage')
-  console.log("adding new work range");
-})
+app.get('/prefs/:ranges', (req, res) => res.render('pages/prefs', {
+  numRanges: req.params['ranges']
+}));
 
 
 // --------------------------------

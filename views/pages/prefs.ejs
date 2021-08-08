@@ -1,7 +1,7 @@
 <%- include('../partials/header'); %>
 </head>
 <body>
-    <div style='width: 30%; margin: 0 35%;'>
+    <div style='width: 50%; margin: 0 25%;'>
         <h1 class='text-center'>Preferences</h1>
         <form action='/prefs' method='GET'>
             <div class='row'>
@@ -30,25 +30,31 @@
             &nbsp;
             <div class='row'>
                 <div class='col'>Session length (hours)</div>
-                <div class='col-3' style='text-align: right;'><input type='number' class='form-control' name='sessionLength' id='sessionLength' value='1'></div>
+                <div class='col-5' style='text-align: right;'><input type='number' class='form-control' name='sessionLength' id='sessionLength' value='1'></div>
             </div>
             &nbsp;
             &nbsp;
-            <div>
-                <div class='row'>
-                    <div class='col'>Time ranges</div>
-                    <div class='col-3'><input type='time' class='form-control' name='start0' id='start0'></div>
-                    <div class='range-mid'>to</div>
-                    <div class='col-3'><input type='time' class='form-control' name='end0' id='end0'></div>
-                </div>
-                <div style='text-align: right;'>
-                    <form action="/prefs/add-range" method='post'>
-                        <input type="submit" class='btn' value='+'>
-                    </form>
-                </div>
+            
+            <div class='rounded' style='background-color: gainsboro; padding: 10px;'>
+                <b>Working times:</b>
+                <% for(var i = 0; i < numRanges; i++) { %>
+                    <div>
+                        <div class='row'>
+                            <div class='col'>Range <%= i+ 1 %></div>
+                            <div class='col-3'><input type='time' class='form-control' name='start<%= i %>' id='start<%= i %>'></div>
+                            <div class='range-mid'>to</div>
+                            <div class='col-3'><input type='time' class='form-control' name='end<%= i %>' id='end<%= i %>'></div>
+                        </div>
+                    </div>
+                <% } %>
             </div>
-            
-            
         </form>
+        <div>
+            <div style='text-align: right;'>
+                <form action="/prefs/<%= parseInt(numRanges) + 1 %>" method='get'>
+                    <input type="submit" class='btn' value='+'>
+                </form>
+            </div>
+        </div>
     </div>
     <%- include('../partials/footer'); %>
