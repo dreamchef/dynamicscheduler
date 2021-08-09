@@ -33,7 +33,29 @@ app.get('/prefs/:ranges', (req, res) => res.render('pages/prefs', {
 // --------------------------------
 //          TASKS VIEW ROUTES
 /// --------------------------------
-app.get('/tasks', (req, res) => res.render('pages/tasks'));
+app.get('/tasks', function(req, res) {
+  var tasks = [
+    {
+      id: 0,
+      name: 'example task',
+      deadline: new Date(),
+      length: 1.5,
+      type_id: 0,
+      start: new Date(),
+      end: new Date()
+    }
+  ];
+  var types = [
+    {
+      id: 0,
+      name: 'example type'
+    }
+  ]
+  res.render('pages/tasks', {
+    tasks: tasks,
+    types: types
+  });
+});
 
 
 // --------------------------------
