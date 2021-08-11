@@ -22,7 +22,11 @@ app.get('/', (req, res) => res.render('pages/index.ejs'));
 //          PREFERENCES VIEW ROUTES
 /// --------------------------------
 app.get('/prefs', (req, res) => res.render('pages/prefs', {
-  numRanges: 1
+  numRanges: 1,
+  ranges: [{start: '00:00:00', end: '10:00:00'}],
+  dailyVar: 0,
+  sessionVar: 0,
+  sessionLen: 10
 }));
 
 app.get('/prefs/:ranges', (req, res) => res.render('pages/prefs', {
@@ -36,6 +40,7 @@ app.get('/prefs/:ranges', (req, res) => res.render('pages/prefs', {
 app.get('/tasks', function(req, res) {
   var tasks = [
     {
+
       id: 0,
       name: 'example task',
       deadline: new Date(),
