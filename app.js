@@ -113,11 +113,7 @@ app.get('/schedule', function(req, res) {
       name: 'example type'
     }
   ]
-  let prefs = {
-    ranges = [
-      { start: '07:00:00 AM', end: '06:00:00 PM'}
-    ]
-  }
+  let prefs;
   res.render('pages/schedule', {
     tasks: tasks,
     types: types,
