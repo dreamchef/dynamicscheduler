@@ -66,10 +66,62 @@ app.get('/tasks', function(req, res) {
 // --------------------------------
 //          EVENTS VIEW ROUTES
 /// --------------------------------
-app.get('/events', (req, res) => res.render('pages/events'));
+app.get('/events', function(req, res) {
+  var events = [
+    {
+
+      id: 0,
+      name: 'example event',
+      start: new Date(),
+      end: new Date()
+    }
+  ];
+  res.render('pages/events', {
+    events: events
+  });
+});
 
 
 // --------------------------------
 //          SCHEDULE VIEW ROUTES
 /// --------------------------------
-app.get('/schedule', (req, res) => res.render('pages/schedule'));
+app.get('/schedule', function(req, res) {
+  let events = [
+    {
+
+      id: 0,
+      name: 'example event',
+      start: new Date(),
+      end: new Date()
+    }
+  ];
+  let tasks = [
+    {
+
+      id: 0,
+      name: 'example task',
+      deadline: new Date(),
+      length: 1.5,
+      type_id: 0,
+      start: new Date(),
+      end: new Date()
+    }
+  ];
+  let types = [
+    {
+      id: 0,
+      name: 'example type'
+    }
+  ]
+  let prefs = {
+    ranges = [
+      { start: '07:00:00 AM', end: '06:00:00 PM'}
+    ]
+  }
+  res.render('pages/schedule', {
+    tasks: tasks,
+    types: types,
+    events: events,
+    prefs: prefs
+  });
+});

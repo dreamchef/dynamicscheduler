@@ -1,4 +1,54 @@
 <%- include('../partials/header'); %>
 </head>
+&nbsp;
+    <div class='container'>
+        <form action="/events/add">
+            <div class='row' style='background-color: gainsboro; padding: 10px;'>
+                <div class='col'>
+                    <p style='margin: 8px;'>New event</p> 
+                </div>
+                <div class='col-4'>
+                    <input type="text" class="form-control" name="newEventName" id="newEventName" placeholder="name">
+                </div>
+                <div class='col'>
+                    <input type="datetime" class="form-control" name="newEventStart" id="newEventStart" placeholder="beginning">
+                </div>
+                <div class='col'>
+                    <input type="datetime" class="form-control" name="newEventEnd" id="newEventEnd" placeholder="end">
+                </div>
+                <div class='col'>
+                    <input type="submit" class="form-control" value='Create'>
+                </div>
+            </div>
+        </form>
+        &nbsp;
+        &nbsp;
+        <h1 class='text-center'>Upcoming Events</h1> 
+        <div class='row' style='background-color: lightblue; padding: 10px;'>
+            <div class='col'>
+                Name
+            </div>
+            <div class='col'>
+                Start
+            </div>
+            <div class='col'>
+                End
+            </div>
+        </div>
+        <% for(var i = 0; i < events.length; i++) { %>
+            <% console.log(events[i]); %>
+            <div class='row' style='padding: 10px;'>
+                <div class='col'>
+                    <%= events[i].name %>
+                </div>
+                <div class='col'>
+                    <%= events[i].start %>
+                </div>
+                <div class='col'>
+                    <%= events[i].end %>
+                </div>
+            </div>
+        <% } %>
+    </div>
 <body>
     <%- include('../partials/footer'); %>

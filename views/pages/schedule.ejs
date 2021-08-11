@@ -1,4 +1,42 @@
 <%- include('../partials/header'); %>
 </head>
+<div class='container text-center'>
+    <h1 class='text-center'>Schedule</h1>
+    <div class='row'>
+        <div class='col-3'>
+            <div class='row'>
+                <button class='form-control col'>Day</button>
+                <button class='form-control col'> Week</button>
+                <button class='form-control col'>Month</button>
+            </div>
+        </div>
+        <div class='col'>
+            <button class='form-control'>Done</button>
+        </div>
+        <div class='col-3'>
+            <form action='/schedule/recalculate' method='POST'>
+                <div class='row'>
+                    <input type='submit' class='form-control col' value='Recalculate'>
+                <input type='number' step='0.1' class='form-control col' placeholder='extra (hrs)'>
+                </div>
+                
+            </form>
+        </div>
+    </div>
+    &nbsp;
+    <div class='row' style='background-color: lightblue'>
+        <div class='col-1' style='background-color: gainsboro'>
+            <% let timeLabel = 700; 
+            for(timeLabel; timeLabel < 1700; timeLabel += 100) { %>
+                <div class='row border' style='padding: 10px 30px;'>
+                    <%= timeLabel %>
+                </div>
+            <% } %>
+        </div>
+        <div class='col'>
+
+        </div>
+    </div>
+</div>
 <body>
     <%- include('../partials/footer'); %>
