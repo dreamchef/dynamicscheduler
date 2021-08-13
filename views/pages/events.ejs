@@ -2,7 +2,7 @@
 </head>
 &nbsp;
     <div class='container'>
-        <form action="/events/add">
+        <form action="/events/create" method="post">
             <div class='row' style='background-color: gainsboro; padding: 10px;'>
                 <div class='col'>
                     <p style='margin: 8px;'>New event</p> 
@@ -11,10 +11,10 @@
                     <input type="text" class="form-control" name="newEventName" id="newEventName" placeholder="name">
                 </div>
                 <div class='col'>
-                    <input type="datetime" class="form-control" name="newEventStart" id="newEventStart" placeholder="beginning">
+                    <input type="date" class="form-control" name="newEventStart" id="newEventStart" placeholder="beginning">
                 </div>
                 <div class='col'>
-                    <input type="datetime" class="form-control" name="newEventEnd" id="newEventEnd" placeholder="end">
+                    <input type="date" class="form-control" name="newEventEnd" id="newEventEnd" placeholder="end">
                 </div>
                 <div class='col'>
                     <input type="submit" class="form-control" value='Create'>

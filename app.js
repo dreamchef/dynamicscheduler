@@ -54,6 +54,7 @@ Event.init({
     primaryKey: true,
     autoIncrement: true
   },
+  name: DataTypes.STRING,
   start: DataTypes.DATE,
   end: DataTypes.DATE
 }, { sequelize, modelName: 'event' });
@@ -117,8 +118,6 @@ app.get('/tasks', urlencodedParser, async function(req, res) {
   await sequelize.sync();
   const tasks = await Task.findAll();
   const types = await Type.findAll();
-  console.log(tasks);
-  console.log(types);
   res.render('pages/tasks', {
     tasks: tasks,
     types: types
@@ -141,19 +140,21 @@ app.post('/tasks/create', urlencodedParser, async function(req, res) {
 ////////////////////////////
 //  EVENTS VIEW ROUTES    //
 ////////////////////////////
-app.get('/events', function(req, res) {
-  var events = [
-    {
-
-      id: 0,
-      name: 'example event',
-      start: new Date(),
-      end: new Date()
-    }
-  ];
+app.get('/events', urlencodedParser, async function(req, res) {
+  await sequelize.sync();
+  const events = await Event.findAll();
   res.render('pages/events', {
     events: events
   });
+});
+
+app.post('/events/create', urlencodedParser, async function(req, res) {
+  await Event.create({
+    name: req.body.newEventName,
+    start: req.body.newEventStart,
+    end: req.body.newEventEnd
+  });
+  res.redirect('/events');
 });
 
 
