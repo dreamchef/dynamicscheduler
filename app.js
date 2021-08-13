@@ -42,7 +42,7 @@ Task.init({
   name: DataTypes.STRING,
   deadline: DataTypes.DATE,
   length: DataTypes.INTEGER,
-  type_id: DataTypes.INTEGER,
+  type: DataTypes.INTEGER,
   start: DataTypes.DATE,
   end: DataTypes.DATE
 }, { sequelize, modelName: 'task' });
@@ -118,6 +118,7 @@ app.get('/tasks', urlencodedParser, async function(req, res) {
   await sequelize.sync();
   const tasks = await Task.findAll();
   const types = await Type.findAll();
+  console.log(tasks);
   res.render('pages/tasks', {
     tasks: tasks,
     types: types
@@ -129,7 +130,7 @@ app.post('/tasks/create', urlencodedParser, async function(req, res) {
     name: req.body.newTaskName,
     deadline: req.body.newTaskDeadline,
     length: req.body.newTaskLength,
-    type_id: req.body.newTaskType,
+    type: req.body.newTaskType,
     start: null,
     end: null
   });
@@ -178,7 +179,7 @@ app.get('/schedule', function(req, res) {
       name: 'example task',
       deadline: new Date(),
       length: 1.5,
-      type_id: 0,
+      type: 0,
       start: new Date(),
       end: new Date()
     }
