@@ -5,11 +5,28 @@ const path = require('path');
 const PORT = process.env.PORT || 3000;
 const express = require('express');
 const app = express();
-const fs = require('fs');
-const https = require('https');
-const axios = require('axios');
 const { Sequelize, Model, DataTypes } = require('sequelize');
-const sequelize = new Sequelize('sqlite::memory:');
+var bodyParser = require('body-parser');
+var jsonParser = bodyParser.json();
+var urlencodedParser = bodyParser.urlencoded({ extended: false });
+
+const sequelize = new Sequelize('database', 'username', 'password', {
+  dialect: 'sqlite',
+  // we will be saving our db as a file on this path
+  storage: 'database.sqlite', // or ':memory:'
+});
+module.exports = { 
+  sequelize 
+}
+
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log('Database connected.');
+  })
+  .catch(err => {
+    console.error('Unable to connect to the database:', err);
+  });
 
 
 /////////////////////////////
@@ -96,29 +113,28 @@ app.get('/prefs/:ranges', (req, res) => res.render('pages/prefs', {
 /////////////////////////////
 //  TASKS VIEW ROUTES      //
 /////////////////////////////
-app.get('/tasks', function(req, res) {
-  var tasks = [
-    {
-
-      id: 0,
-      name: 'example task',
-      deadline: new Date(),
-      length: 1.5,
-      type_id: 0,
-      start: new Date(),
-      end: new Date()
-    }
-  ];
-  var types = [
-    {
-      id: 0,
-      name: 'example type'
-    }
-  ]
+app.get('/tasks', urlencodedParser, async function(req, res) {
+  await sequelize.sync();
+  const tasks = await Task.findAll();
+  const types = await Type.findAll();
+  console.log(tasks);
+  console.log(types);
   res.render('pages/tasks', {
     tasks: tasks,
     types: types
   });
+});
+
+app.post('/tasks/create', urlencodedParser, async function(req, res) {
+  await Task.create({
+    name: req.body.newTaskName,
+    deadline: req.body.newTaskDeadline,
+    length: req.body.newTaskLength,
+    type_id: req.body.newTaskType,
+    start: null,
+    end: null
+  });
+  res.redirect('/tasks');
 });
 
 

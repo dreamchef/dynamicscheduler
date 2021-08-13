@@ -2,7 +2,7 @@
 </head>
     &nbsp;
     <div class='container'>
-        <form action="/tasks/add">
+        <form action="/tasks/create" method="POST">
             <div class='row' style='background-color: gainsboro; padding: 10px;'>
                 <div class='col'>
                     <p style='margin: 8px;'>New task</p> 
@@ -11,7 +11,7 @@
                     <input type="text" class="form-control" name="newTaskName" id="newTaskName" placeholder="name">
                 </div>
                 <div class='col'>
-                    <input type="datetime" class="form-control" name="newTaskDeadline" id="newTaskDeadline" placeholder="deadline">
+                    <input type="date" class="form-control" name="newTaskDeadline" id="newTaskDeadline" placeholder="deadline">
                 </div>
                 <div class='col'>
                     <input type="number" step='0.1' min='0' class="form-control" name="newTaskLength" id="newTaskLength" placeholder="hours">
@@ -37,9 +37,11 @@
             <div class='col'>
                 Length (hours)
             </div>
+            <% if(false) { %>
             <div class='col'>
                 Type
             </div>
+            <% } %>
         </div>
         <% for(var i = 0; i < tasks.length; i++) { %>
             <% console.log(tasks[i]); %>
@@ -53,9 +55,11 @@
                 <div class='col'>
                     <%= tasks[i].length %>
                 </div>
+                <% if(false) { %>
                 <div class='col'>
                     <%= types[tasks[i].type_id].name %>
                 </div>
+                <% } %> 
             </div>
         <% } %>
     </div>
