@@ -13,7 +13,7 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false });
 const sequelize = new Sequelize('database', 'username', 'password', {
   dialect: 'sqlite',
   // we will be saving our db as a file on this path
-  storage: 'database.sqlite', // or ':memory:'
+  storage: 'database3.sqlite', // or ':memory:'
 });
 module.exports = { 
   sequelize 
@@ -40,11 +40,12 @@ Task.init({
     autoIncrement: true
   },
   name: DataTypes.STRING,
-  deadline: DataTypes.DATE,
+  deadline: DataTypes.STRING,
+  deadlineTime: DataTypes.STRING,
   length: DataTypes.INTEGER,
   type: DataTypes.INTEGER,
-  start: DataTypes.DATE,
-  end: DataTypes.DATE
+  start: DataTypes.STRING,
+  end: DataTypes.STRING
 }, { sequelize, modelName: 'task' });
 
 class Event extends Model {}
@@ -55,8 +56,10 @@ Event.init({
     autoIncrement: true
   },
   name: DataTypes.STRING,
-  start: DataTypes.DATE,
-  end: DataTypes.DATE
+  start: DataTypes.STRING,
+  startTime: DataTypes.STRING,
+  end: DataTypes.STRING,
+  endTime: DataTypes.STRING,
 }, { sequelize, modelName: 'event' });
 
 class Pref extends Model {}
@@ -118,7 +121,6 @@ app.get('/tasks', urlencodedParser, async function(req, res) {
   await sequelize.sync();
   const tasks = await Task.findAll();
   const types = await Type.findAll();
-  console.log(tasks);
   res.render('pages/tasks', {
     tasks: tasks,
     types: types
@@ -129,6 +131,7 @@ app.post('/tasks/create', urlencodedParser, async function(req, res) {
   await Task.create({
     name: req.body.newTaskName,
     deadline: req.body.newTaskDeadline,
+    deadlineTime: req.body.newTaskDeadlineTime,
     length: req.body.newTaskLength,
     type: req.body.newTaskType,
     start: null,
@@ -153,7 +156,9 @@ app.post('/events/create', urlencodedParser, async function(req, res) {
   await Event.create({
     name: req.body.newEventName,
     start: req.body.newEventStart,
-    end: req.body.newEventEnd
+    startTime: req.body.newEventStartTime,
+    end: req.body.newEventEnd,
+    endTime: req.body.newEventEndTime
   });
   res.redirect('/events');
 });
