@@ -9,7 +9,7 @@
                 <div class='col'>
                     <div class='row'>
                         <div class='col range-left'>static</div>
-                        <div class='col'><input type='range' class='form-range' name='dailyVar' id='dailyVar' value=<%= dailyVar %>></div>
+                        <div class='col'><input type='range' class='form-range' name='dailyVar'  value=<%= userPrefs.dailyVariety %>></div>
                         <div class='col range-right'>dynamic</div>
                     </div>
                 </div>
@@ -21,7 +21,7 @@
                 <div class='col'>
                     <div class='row'>
                         <div class='col range-left'>similar</div>
-                        <div class='col'><input type='range' class='form-range' name='sessionVar' id='sessionVar' value=<%= sessionVar %>></div>
+                        <div class='col'><input type='range' class='form-range' name='sessionVar' value=<%= userPrefs.sessionVariety %>></div>
                         <div class='col range-right'>disparate</div>
                     </div>
                 </div>
@@ -30,7 +30,7 @@
             &nbsp;
             <div class='row'>
                 <div class='col'>Session length (hours)</div>
-                <div class='col-5' style='text-align: right;'><input type='number' class='form-control' name='sessionLength' id='sessionLength' value=<%= parseInt(sessionLen) %>></div>
+                <div class='col-5' style='text-align: right;'><input type='number' class='form-control' name='sessionLength' value=<%= parseInt(userPrefs.sessionLength) %>></div>
             </div>
             &nbsp;
             &nbsp;
@@ -39,13 +39,6 @@
                     <div class='col'>Working times</div>
                     <div class='col-5'></div>
                 </div>
-                <% for(var i = 0; i < numRanges; i++) { %>
-                    <div class='row'>
-                        <input type='time' class='form-control col' value=<%= ranges[i].start %>>
-                        <div class='range-mid'>to</div>
-                        <input type='time' class='form-control col' value=<%= ranges[i].end %>>
-                    </div>
-                <% } %> 
             </div>
             <div class='row'>
                 <div class='col'></div>
@@ -59,28 +52,44 @@
         </form>
     </div>
     <script>
-        console.log('adding event listener for range add');
-        document.getElementById('addRangeBtn').addEventListener('click', function() {   
-            
+        let dbRanges = JSON.parse('<%- userRanges %>');
+        let numDBRanges = dbRanges.length;
+        let totalRanges = numDBRanges;
+
+        function buildRange(i, list, j) {
             let newStart = document.createElement('input');
-            newStart.setAttribute('type','time');
-            newStart.setAttribute('class','form-control col');
-            
-            let newEnd = document.createElement('input');
-            newEnd.setAttribute('type','time');
-            newEnd.setAttribute('class','form-control col');
+                newStart.setAttribute('type','time');
+                newStart.setAttribute('class','form-control col');
+                newStart.setAttribute('name','start'+i.toString());
+                newStart.setAttribute('value',list[j].startTime);
+                
+                let newEnd = document.createElement('input');
+                newEnd.setAttribute('type','time');
+                newEnd.setAttribute('class','form-control col');
+                newEnd.setAttribute('name','end'+i.toString());
+                newEnd.setAttribute('value',list[j].endTime);
 
-            let newMid = document.createElement('div');
-            newMid.setAttribute('class','range-mid');
-            newMid.innerHTML = 'to';
+                let newMid = document.createElement('div');
+                newMid.setAttribute('class','range-mid');
+                newMid.innerHTML = 'to';
 
-            let newRow = document.createElement('div');
-            newRow.setAttribute('class','row');
-            newRow.appendChild(newStart);
-            newRow.appendChild(newMid);
-            newRow.appendChild(newEnd);
-            
-            document.getElementById('rangesList').appendChild(newRow);
+                let newRow = document.createElement('div');
+                newRow.setAttribute('class','row');
+                newRow.appendChild(newStart);
+                newRow.appendChild(newMid);
+                newRow.appendChild(newEnd);
+                
+                document.getElementById('rangesList').appendChild(newRow);
+        }
+
+        // build initial ranges (saved in database)
+        for(let i = 0; i < numDBRanges; i++) {
+            buildRange(i, dbRanges, i);
+        }
+
+        document.getElementById('addRangeBtn').addEventListener('click', function() {   
+            buildRange(totalRanges, [{startTime: '09:00', endTime: '17:00'}], 0);
+            totalRanges++;
         });
     </script>
     <%- include('../partials/footer'); %>

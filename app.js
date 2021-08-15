@@ -13,12 +13,12 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false });
 /////////////////////////////
 //      USER AUTH STATE    //
 /////////////////////////////
-let user = 'dan'; // for dev
+let user = null; // for dev
 
 const sequelize = new Sequelize('database', 'username', 'password', {
   dialect: 'sqlite',
   // we will be saving our db as a file on this path
-  storage: 'database10.sqlite', // or ':memory:'
+  storage: 'database.sqlite', // or ':memory:'
 });
 module.exports = { 
   sequelize 
@@ -78,7 +78,7 @@ WorkRange.init({
   },
   startTime: DataTypes.STRING,
   endTime: DataTypes.STRING,
-  user_id: DataTypes.INTEGER
+  user: DataTypes.STRING
 }, { sequelize, modelName: 'workrange' });
 
 class User extends Model {}
@@ -129,7 +129,6 @@ app.get('/', (req, res) => res.render('pages/login.ejs', {
 }));
 
 app.post('/login', urlencodedParser, async function (req, res) {
-  console.log('begin login route');
   let msg = '';
   await sequelize.sync();
   let userQuery = await User.findAll({where: {name: req.body.username}});
@@ -181,7 +180,11 @@ app.post('/register', urlencodedParser, async function (req, res) {
         sessionVariety: 50,
         sessionLength: 1
       });
-      console.log('created a new user: ',newUser);
+      await WorkRange.create({
+        startTime: '09:00',
+        endTime: '17:00',
+        user: req.body.username
+      })
       user = req.body.username;
       res.redirect('/tasks');
     }
@@ -196,24 +199,21 @@ app.post('/register', urlencodedParser, async function (req, res) {
   res.render('pages/register.ejs', {
     msg: msg
   });
-  console.log('end reg route');
 });
 
 /////////////////////////////
 //  PREFERENCES ROUTES     //
 /////////////////////////////
 app.get('/prefs', async function (req, res) {
-  await sequelize.sync();
-  userPrefs = await User.findAll({where: {name: user}});
-  // get current user preferences
   if(user != null) {
+
+    await sequelize.sync();
+    userPrefs = await User.findAll({where: {name: user}});
+    userRanges = await WorkRange.findAll({where: {user: user}});
+    console.log(userRanges);
     res.render('pages/prefs', {
-      numRanges: 1,
-      ranges: [{start: '00:00:00', end: '10:00:00'}],
-      dailyVar: userPrefs[0].dailyVariety,
-      sessionVar: userPrefs[0].sessionVariety,
-      sessionLen: userPrefs[0].sessionLength
-      
+      userPrefs: userPrefs,
+      userRanges: JSON.stringify(userRanges)
     });
   }
   else {
@@ -230,6 +230,31 @@ app.post('/prefs/save', urlencodedParser, async function (req, res) {
     sessionVariety: req.body.sessionVar,
     sessionLength: req.body.sessionLen
   },{where: {name: user} });
+
+  console.log(numRanges = req.body);
+
+  numRanges = ((Object.keys(req.body).length - 3)/2) - 1; // three non-working times fields, and two fields per work range
+  await WorkRange.findAll({where: {user: user}})
+  .then(result => {
+    for (const row of result){
+        // Make sure to wait on all your sequelize CRUD calls
+        WorkRange.update({
+          startTime: req.body['start'+numRanges.toString()],
+          endTime: req.body['end'+numRanges.toString()],
+        },{ where: { id: row.id }});
+        console.log('range at index',numRanges,'updated');
+        numRanges--;
+    }
+  });
+  for(numRanges; numRanges >= 0; numRanges--){ // for new ranges, create new entries in database
+    await WorkRange.create({
+      startTime: req.body['start'+numRanges.toString()],
+      endTime: req.body['end'+numRanges.toString()],
+      user: user
+    });
+    console.log('range at index',numRanges,'updated');
+  }
+  console.log(userRanges = await WorkRange.findAll({where: {user: user}}));
   res.redirect('/prefs');
 });
 
