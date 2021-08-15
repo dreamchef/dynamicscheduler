@@ -3,7 +3,7 @@
 <body>
     <div class='container'>
         <h1 class='text-center'>Preferences</h1>
-        <form action='/prefs' method='GET'>
+        <form action='/prefs/save' method='POST'>
             <div class='row'>
                 <div class='col'>Daily variety</div>
                 <div class='col'>
@@ -30,7 +30,7 @@
             &nbsp;
             <div class='row'>
                 <div class='col'>Session length (hours)</div>
-                <div class='col-5' style='text-align: right;'><input type='number' class='form-control' name='sessionLength' id='sessionLength' value=<%= sessionLen %>></div>
+                <div class='col-5' style='text-align: right;'><input type='number' class='form-control' name='sessionLength' id='sessionLength' value=<%= parseInt(sessionLen) %>></div>
             </div>
             &nbsp;
             &nbsp;

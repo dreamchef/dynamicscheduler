@@ -18,7 +18,7 @@ let user = 'dan'; // for dev
 const sequelize = new Sequelize('database', 'username', 'password', {
   dialect: 'sqlite',
   // we will be saving our db as a file on this path
-  storage: 'database9.sqlite', // or ':memory:'
+  storage: 'database10.sqlite', // or ':memory:'
 });
 module.exports = { 
   sequelize 
@@ -177,8 +177,8 @@ app.post('/register', urlencodedParser, async function (req, res) {
       let newUser = await User.create({
         name: req.body.username,
         password: req.body.password,
-        dailyVariety: 1,
-        sessionVariety: 1,
+        dailyVariety: 50,
+        sessionVariety: 50,
         sessionLength: 1
       });
       console.log('created a new user: ',newUser);
@@ -202,14 +202,17 @@ app.post('/register', urlencodedParser, async function (req, res) {
 /////////////////////////////
 //  PREFERENCES ROUTES     //
 /////////////////////////////
-app.get('/prefs', function (req, res) {
+app.get('/prefs', async function (req, res) {
+  await sequelize.sync();
+  userPrefs = await User.findAll({where: {name: user}});
+  // get current user preferences
   if(user != null) {
     res.render('pages/prefs', {
       numRanges: 1,
       ranges: [{start: '00:00:00', end: '10:00:00'}],
-      dailyVar: 0,
-      sessionVar: 0,
-      sessionLen: 10
+      dailyVar: userPrefs[0].dailyVariety,
+      sessionVar: userPrefs[0].sessionVariety,
+      sessionLen: userPrefs[0].sessionLength
       
     });
   }
@@ -220,19 +223,15 @@ app.get('/prefs', function (req, res) {
   }
 });
 
-app.get('/prefs/:ranges', function(req, res) {
-  if(user != null) {
-    res.render('pages/prefs', {
-      numRanges: req.params['ranges']
-    });
-  }
-  else {
-    res.render('pages/login', {
-      msg: 'please login to access the page'
-    });
-  }
+app.post('/prefs/save', urlencodedParser, async function (req, res) {
+  await sequelize.sync();
+  await User.update({ 
+    dailyVariety: req.body.dailyVar,
+    sessionVariety: req.body.sessionVar,
+    sessionLength: req.body.sessionLen
+  },{where: {name: user} });
+  res.redirect('/prefs');
 });
-
 
 /////////////////////////////
 //  TASKS VIEW ROUTES      //
