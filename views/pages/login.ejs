@@ -1,0 +1,33 @@
+<%- include('../partials/headerpublic'); %>
+</head>
+<body>
+    <div class='container text-center' >
+        <h1 class='text-center' style='margin: 30px;'>Dynamic Scheduler</h1>
+        <p class='text-muted text-center'>Welcome to your ideal schedule, as varied or regimented as you like.  Collect your tasks and events to automatically generate a schedule to meet your needs.  Adjust to find your ideal blend of variety, and block off times of the day to get work done.  If a task takes longer than expected, easily adjust your schedule with the click of a button. </p>
+        <form action='/login' method='POST'>
+            <div class='row'>
+                <div class='col-3' style='text-align: right;'>Username: </div>
+                <div class='col'>
+                    <input class='form-control' type='text' name='username'>
+                </div>
+                <div class='col-3'></div>
+            </div>
+            &nbsp;
+            <div class='row'>
+                <div class='col-3' style='text-align: right;'>Password: </div>
+                <div class='col'>
+                    <input class='form-control' type='password' name='password'>
+                </div>
+                <div class='col-3'></div>
+            </div>
+            &nbsp;
+            <input class='form-control' type='submit' value='Submit' style='width: 80px; margin: auto;'>
+        </form>
+        <i><%= msg %></i>
+        <div>
+            <a href="/register">...or create your account.</a>
+        </div>
+        
+    </div>
+    
+    <%- include('../partials/footer'); %>
