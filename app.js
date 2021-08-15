@@ -117,6 +117,11 @@ app
 
 
 /////////////////////////////
+// PRIVACY AND TERMS ROUTE //
+/////////////////////////////
+app.get('/privacy', (req, res) => res.render('pages/privacy.ejs'));
+
+/////////////////////////////
 //      LOGIN ROUTES       //
 /////////////////////////////
 app.get('/', (req, res) => res.render('pages/login.ejs', {
