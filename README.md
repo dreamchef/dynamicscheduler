@@ -15,6 +15,7 @@ User can enter events with date and time
 - Work times: determines where the scheduler is allowed to place work sessions
 - Session length: determines how long the scheduler will assign to work on a single task
 - Variety: determines whether subsequent tasks are similar or disparate
+
 ![](resources/img/dynamicscheduler02.png)
 ### Schedule generation
 Based on the preferences, given the task and event lists, and for a specified period of time (i.e. the next 2 weeks), the system generates a schedule that leads to on-time completion of all tasks with time blocked for events, while optimizing for global preferences.
