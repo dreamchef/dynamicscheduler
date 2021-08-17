@@ -2,7 +2,7 @@
 
 Alpha availabe on [Heroku](dynamicscheduler.herokuapp.com).
 
-Based on preferences, given the task and event lists, and for a specified period of time (i.e. the next 2 weeks), the system will generate a schedule that leads to on-time completion of all tasks with time blocked for events, while optimizing for global preferences. Collect your tasks and events to automatically generate a schedule to meet your needs. Adjust to find your ideal blend of variety, and block off times of the day to get work done. If a task takes longer than expected, easily adjust your schedule with the click of a button.
+Welcome to your ideal schedule, as varied or regimented as you like. Collect your tasks and events to automatically generate a schedule to meet your needs. Adjust to find your ideal blend of variety, and block off times of the day to get work done. If a task takes longer than expected, easily adjust your schedule with the click of a button. 
 
 ## Core Features
 ### Task Recording
