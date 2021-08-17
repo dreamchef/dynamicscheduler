@@ -1,6 +1,6 @@
 # Dynamic Scheduler
 
-Alpha availabe on [Heroku](dynamicscheduler.herokuapp.com).
+<p>Alpha available on <a href="https://dynamicscheduler.herokuapp.com"  target="_blank" rel="noopener noreferrer">Heroku</a>!</p>
 
 Welcome to your ideal schedule, as varied or regimented as you like. Collect your tasks and events to automatically generate a schedule to meet your needs. Adjust to find your ideal blend of variety, and block off times of the day to get work done. If a task takes longer than expected, easily adjust your schedule with the click of a button. 
 
