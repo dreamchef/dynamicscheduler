@@ -1,4 +1,4 @@
-# Dynamic Schedule
+# Dynamic Scheduler
 
 Alpha availabe on [Heroku](dynamicscheduler.herokuapp.com).
 
@@ -11,7 +11,7 @@ User can enter tasks with deadline, hours estimated, and type; which then appear
 ### Event Recording
 User can enter events with date and time
 ### Global Preferences
-- Repetition: determines how much the routine changes from day to day (holding taskload constant)
+- Repetition: determines how much the routine changes from day to day (holding task load constant)
 - Work times: determines where the scheduler is allowed to place work sessions
 - Session length: determines how long the scheduler will assign to work on a single task
 - Variety: determines whether subsequent tasks are similar or disparate
