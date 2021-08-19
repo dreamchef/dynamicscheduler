@@ -29,8 +29,14 @@
             &nbsp;
             &nbsp;
             <div class='row'>
-                <div class='col'>Session length (hours)</div>
-                <div class='col-5' style='text-align: right;'><input type='number' class='form-control' name='sessionLength' value=<%= parseInt(userPrefs.sessionLength) %>></div>
+                <div class='col'>Ideal session length (hr:min)</div>
+                <div class='col-5' style='text-align: right;'><input type='text' pattern='[0-9]{2}:[0-9]{2}' class='form-control' name='sessionLength' value=<%= userPrefs.sessionLength %>></div>
+            </div>
+            &nbsp;
+            &nbsp;
+            <div class='row'>
+                <div class='col'>Minimum session length</div>
+                <div class='col-5' style='text-align: right;'><input type='text' pattern='[0-9]{2}:[0-9]{2}' class='form-control' name='minSessionLength' value=<%= userPrefs.minSessionLength %>></div>
             </div>
             &nbsp;
             &nbsp;

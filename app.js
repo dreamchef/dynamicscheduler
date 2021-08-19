@@ -18,7 +18,7 @@ let user = null; // for dev
 const sequelize = new Sequelize('database', 'username', 'password', {
   dialect: 'sqlite',
   // we will be saving our db as a file on this path
-  storage: 'database.sqlite', // or ':memory:'
+  storage: 'database2.sqlite', // or ':memory:'
 });
 module.exports = { 
   sequelize 
@@ -92,7 +92,10 @@ User.init({
   password: DataTypes.STRING,
   dailyVariety: DataTypes.INTEGER,
   sessionVariety: DataTypes.INTEGER,
-  sessionLength: DataTypes.INTEGER
+  sessionLength: DataTypes.STRING,
+  minSessionLength: DataTypes.STRING,
+  activeTaskId: DataTypes.INTEGER,
+  taskDays: DataTypes.STRING
 }, { sequelize, modelName: 'user' });
 
 class Type extends Model {}
@@ -178,7 +181,8 @@ app.post('/register', urlencodedParser, async function (req, res) {
         password: req.body.password,
         dailyVariety: 50,
         sessionVariety: 50,
-        sessionLength: 1
+        sessionLength: '01:00',
+        minSessionLength: '00:15'
       });
       await WorkRange.create({
         startTime: '09:00',
@@ -230,7 +234,8 @@ app.post('/prefs/save', urlencodedParser, async function (req, res) {
   await User.update({ 
     dailyVariety: req.body.dailyVariety,
     sessionVariety: req.body.sessionVariety,
-    sessionLength: req.body.sessionLength
+    sessionLength: req.body.sessionLength,
+    minSessionLength: req.body.minSessionLength
   },{where: {name: user} });
 
   console.log(numRanges = req.body);
