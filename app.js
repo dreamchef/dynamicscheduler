@@ -209,8 +209,10 @@ app.get('/prefs', async function (req, res) {
 
     await sequelize.sync();
     userPrefs = await User.findAll({where: {name: user}});
+    userPrefs = userPrefs[0];
     userRanges = await WorkRange.findAll({where: {user: user}});
-    console.log(userRanges);
+    console.log(userPrefs);
+    console.log("AHHHHHH");
     res.render('pages/prefs', {
       userPrefs: userPrefs,
       userRanges: JSON.stringify(userRanges)
@@ -226,9 +228,9 @@ app.get('/prefs', async function (req, res) {
 app.post('/prefs/save', urlencodedParser, async function (req, res) {
   await sequelize.sync();
   await User.update({ 
-    dailyVariety: req.body.dailyVar,
-    sessionVariety: req.body.sessionVar,
-    sessionLength: req.body.sessionLen
+    dailyVariety: req.body.dailyVariety,
+    sessionVariety: req.body.sessionVariety,
+    sessionLength: req.body.sessionLength
   },{where: {name: user} });
 
   console.log(numRanges = req.body);
@@ -242,7 +244,6 @@ app.post('/prefs/save', urlencodedParser, async function (req, res) {
           startTime: req.body['start'+numRanges.toString()],
           endTime: req.body['end'+numRanges.toString()],
         },{ where: { id: row.id }});
-        console.log('range at index',numRanges,'updated');
         numRanges--;
     }
   });
@@ -252,7 +253,6 @@ app.post('/prefs/save', urlencodedParser, async function (req, res) {
       endTime: req.body['end'+numRanges.toString()],
       user: user
     });
-    console.log('range at index',numRanges,'updated');
   }
   console.log(userRanges = await WorkRange.findAll({where: {user: user}}));
   res.redirect('/prefs');
